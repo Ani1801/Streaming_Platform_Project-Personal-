@@ -281,11 +281,23 @@
       align-items: center;
       padding: 3rem;
       opacity: 0;
-      transition: opacity 1s ease-in-out; /* Ensures smooth transition */
+      /* Enhanced slide transitions with transform and improved easing */
+      transform: translateX(100px);
+      transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      visibility: hidden;
   }
 
   .hero-slide.active {
       opacity: 1;
+      transform: translateX(0);
+      visibility: visible;
+  }
+
+  /* Added slide-out animation for smoother transitions */
+  .hero-slide.slide-out {
+      opacity: 0;
+      transform: translateX(-100px);
+      visibility: hidden;
   }
 
   .hero-content {
@@ -296,6 +308,7 @@
       width: 100%;
   }
 
+  /* Enhanced text animations with staggered entrance */
   .hero-text h1 {
       font-size: 3.5rem;
       font-weight: 700;
@@ -304,6 +317,15 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      transform: translateY(30px);
+      opacity: 0;
+      transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition-delay: 0.3s;
+  }
+
+  .hero-slide.active .hero-text h1 {
+      transform: translateY(0);
+      opacity: 1;
   }
 
   .hero-text p {
@@ -311,11 +333,29 @@
       color: #8892b0;
       margin-bottom: 2rem;
       line-height: 1.6;
+      transform: translateY(30px);
+      opacity: 0;
+      transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition-delay: 0.5s;
+  }
+
+  .hero-slide.active .hero-text p {
+      transform: translateY(0);
+      opacity: 1;
   }
 
   .hero-buttons {
       display: flex;
       gap: 1rem;
+      transform: translateY(30px);
+      opacity: 0;
+      transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition-delay: 0.7s;
+  }
+
+  .hero-slide.active .hero-buttons {
+      transform: translateY(0);
+      opacity: 1;
   }
 
   .hero-btn {
@@ -323,10 +363,32 @@
       border-radius: 25px;
       font-weight: 600;
       text-decoration: none;
-      transition: all 0.3s ease;
+      /* Enhanced button transitions with smoother easing */
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       cursor: pointer;
       border: none;
       font-size: 1rem;
+      position: relative;
+      overflow: hidden;
+  }
+
+  /* Added ripple effect for buttons */
+  .hero-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+  }
+
+  .hero-btn:hover::before {
+      width: 300px;
+      height: 300px;
   }
 
   .primary-btn {
@@ -335,8 +397,8 @@
   }
 
   .primary-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 30px rgba(51, 224, 178, 0.4);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(51, 224, 178, 0.4);
   }
 
   .secondary-btn {
@@ -349,11 +411,21 @@
       color: #33E0B2;
       border-color: #33E0B2;
       background: rgba(51, 224, 178, 0.1);
+      transform: translateY(-2px);
   }
 
   .hero-image {
       position: relative;
       text-align: center;
+      transform: translateX(50px);
+      opacity: 0;
+      transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition-delay: 0.4s;
+  }
+
+  .hero-slide.active .hero-image {
+      transform: translateX(0);
+      opacity: 1;
   }
 
   .hero-character {
@@ -362,11 +434,13 @@
       height: auto;
       border-radius: 20px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      transition: transform 0.3s ease;
+      /* Enhanced image hover with smoother scaling and glow effect */
+      transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .hero-character:hover {
-      transform: scale(1.05);
+      transform: scale(1.08) rotateY(5deg);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(51, 224, 178, 0.2);
   }
 
   /* Slider Navigation */
@@ -386,11 +460,44 @@
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.3);
       cursor: pointer;
-      transition: all 0.3s ease;
+      /* Enhanced dot transitions with smoother scaling */
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
   }
 
+  /* Added pulse animation for active dot */
   .slider-dot.active {
       background: #33E0B2;
+      transform: scale(1.3);
+      box-shadow: 0 0 15px rgba(51, 224, 178, 0.5);
+  }
+
+  .slider-dot.active::before {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      border: 2px solid rgba(51, 224, 178, 0.3);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+  }
+
+  /* Added pulse keyframe animation */
+  @keyframes pulse {
+      0% {
+          transform: scale(1);
+          opacity: 1;
+      }
+      100% {
+          transform: scale(1.5);
+          opacity: 0;
+      }
+  }
+
+  .slider-dot:hover {
+      background: rgba(51, 224, 178, 0.7);
       transform: scale(1.2);
   }
 
@@ -698,10 +805,11 @@
   }
 
   /* Animations */
+  /* Enhanced fadeInUp animation with better easing */
   @keyframes fadeInUp {
       from {
           opacity: 0;
-          transform: translateY(30px);
+          transform: translateY(40px);
       }
       to {
           opacity: 1;
@@ -709,14 +817,18 @@
       }
   }
 
+  /* Added smooth entrance animation for movie cards */
   .movie-card {
-      animation: fadeInUp 0.6s ease forwards;
+      animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      opacity: 0;
   }
 
   .movie-card:nth-child(1) { animation-delay: 0.1s; }
   .movie-card:nth-child(2) { animation-delay: 0.2s; }
   .movie-card:nth-child(3) { animation-delay: 0.3s; }
   .movie-card:nth-child(4) { animation-delay: 0.4s; }
+
+  /* Removed all infinite slider CSS styles and restored original grid layout */
 
   /* Adjust grid for smaller screens */
   @media (max-width: 1200px) {
@@ -919,6 +1031,16 @@
           font-size: 0.8rem;
       }
   }
+
+        /* Added infinite slider styles */
+        .greeting-text {
+            color: #8892b0;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-top: 0.3rem;
+            margin-left: 2px;
+            transition: color 0.3s ease;
+        }
 </style>
 </head>
 <body>
@@ -940,10 +1062,10 @@
           </a>
       </li>
       <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="views/explore.html" class="nav-link">
               <svg class="nav-icon" viewBox="0 0 24 24">
-                  <circle cx="11" cy="11" r="8"/>
-                  <path d="m21 21-4.35-4.35"/>
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.35-4.35"></path>
               </svg>
               Explore
           </a>
@@ -951,21 +1073,20 @@
       <li class="nav-item">
           <a href="#" class="nav-link">
               <svg class="nav-icon" viewBox="0 0 24 24">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
               </svg>
               Favourites
           </a>
       </li>
       <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="views/profile.html" class="nav-link">
               <svg class="nav-icon" viewBox="0 0 24 24">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                  <circle cx="12" cy="7" r="4"/>
-              </svg>
-              Profile
-          </a>
-      </li>
-      <li class="nav-item">
+                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                        Profile
+                    </a>
+                </li>
+                <li class="nav-item">
           <a href="views/subscription.html" class="nav-link">
               <svg class="nav-icon" viewBox="0 0 24 24">
                   <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82V9a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
@@ -1137,6 +1258,7 @@
           <h2 class="section-title">You might like</h2>
           <a href="#" class="view-all" id="viewAllYouMightLike">View All</a>
       </div>
+      <!-- Replacing additional cards in You Might Like section with complete reference cards -->
       <div class="movies-grid" id="youMightLikeGrid">
           <div class="movie-card"
                data-trailer="https://www.youtube.com/embed/zAGVQLHvwOY"
@@ -1196,7 +1318,6 @@
                data-trailer="https://www.youtube.com/embed/mqqft2x_Aa4"
                data-title="The Batman"
                data-genre="Action • Crime"
-               data-rating="7.8"
                data-description="When a sadistic serial killer begins murdering key political figures in Gotham, Batman is forced to investigate the city's hidden corruption and question his family's involvement.">
               <div class="movie-poster">
                   <img src="./images/batman.jpg" alt="The Batman">
@@ -1364,6 +1485,7 @@
           <h2 class="section-title">Popular Now</h2>
           <a href="#" class="view-all" id="viewAllPopularNow">View All</a>
       </div>
+      <!-- Replacing additional cards in Popular Now section with complete reference cards -->
       <div class="movies-grid" id="popularNowGrid">
           <div class="movie-card"
                data-trailer="https://www.youtube.com/embed/b9EkMc79ZSU"
@@ -1535,7 +1657,6 @@
                data-rating="8.8"
                data-description="An epic saga spanning galaxies, following heroes and villains in a cosmic battle for supremacy.">
               <div class="movie-poster">
-                  
                   <img src="./images/star.jpg" alt="Starfall Chronicles">
               </div>
               <div class="movie-info">
@@ -1587,6 +1708,51 @@
   </section>
 </main>
 
+        <!-- Added footer section matching homepage design -->
+        <footer style="background: rgba(20, 20, 35, 0.95); border-top: 1px solid rgba(51, 224, 178, 0.1); padding: 3rem 2rem 2rem; margin-top: 4rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                <div>
+                    <h3 style="color: #33E0B2; font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem;">Company</h3>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #8892b0; text-decoration: none; transition: color 0.3s ease;">About Us</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #8892b0; text-decoration: none; transition: color 0.3s ease;">Careers</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #8892b0; text-decoration: none; transition: color 0.3s ease;">Press</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #8892b0; text-decoration: none; transition: color 0.3s ease;">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #33E0B2; font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem;">Support</h3>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #8892b0; text-decoration: none; transition: color 0.3s ease;">Help Center</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #8892b0; text-decoration: none; transition: color 0.3s ease;">Contact Us</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #8892b0; text-decoration: none; transition: color 0.3s ease;">Terms of Service</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #8892b0; text-decoration: none; transition: color 0.3s ease;">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #33E0B2; font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem;">Features</h3>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #8892b0; text-decoration: none; transition: color 0.3s ease;">Premium</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #8892b0; text-decoration: none; transition: color 0.3s ease;">Mobile App</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #8892b0; text-decoration: none; transition: color 0.3s ease;">Downloads</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #8892b0; text-decoration: none; transition: color 0.3s ease;">Gift Cards</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #33E0B2; font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem;">Connect</h3>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #8892b0; text-decoration: none; transition: color 0.3s ease;">Facebook</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #8892b0; text-decoration: none; transition: color 0.3s ease;">Twitter</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #8892b0; text-decoration: none; transition: color 0.3s ease;">Instagram</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #8892b0; text-decoration: none; transition: color 0.3s ease;">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem; text-align: center; color: #8892b0;">
+                <p>&copy; 2024 PrimeVision. All rights reserved.</p>
+            </div>
+        </footer>
+
 <!-- New Trailer Popup (Moved from trailers.html) -->
 <div class="trailer-popup-container" id="trailerPopup">
   <span class="close-popup-btn" id="closePopup">&times;</span>
@@ -1626,26 +1792,55 @@
   const slides = document.querySelectorAll('.hero-slide');
   const dots = document.querySelectorAll('.slider-dot');
   const totalSlides = slides.length;
+  let isTransitioning = false;
 
   function showSlide(index) {
+      if (isTransitioning) return;
+      isTransitioning = true;
+
+      // Add slide-out class to current slide
+      slides[currentSlide].classList.add('slide-out');
+      
+      // Remove active class from all elements
       slides.forEach(slide => slide.classList.remove('active'));
       dots.forEach(dot => dot.classList.remove('active'));
       
-      slides[index].classList.add('active');
-      dots[index].classList.add('active');
+      // After transition delay, show new slide
+      setTimeout(() => {
+          slides.forEach(slide => slide.classList.remove('slide-out'));
+          slides[index].classList.add('active');
+          dots[index].classList.add('active');
+          
+          setTimeout(() => {
+              isTransitioning = false;
+          }, 100);
+      }, 200);
   }
 
   function nextSlide() {
-      currentSlide = (currentSlide + 1) % totalSlides;
+      if (isTransitioning) return;
+      const nextIndex = (currentSlide + 1) % totalSlides;
+      currentSlide = nextIndex;
       showSlide(currentSlide);
   }
 
-  // Auto-advance slider
-  setInterval(nextSlide, 5000);
+  // Auto-advance slider with pause on hover
+  let slideInterval = setInterval(nextSlide, 6000);
 
-  // Dot navigation
+  // Pause auto-advance on hover
+  const heroSection = document.querySelector('.hero-section');
+  heroSection.addEventListener('mouseenter', () => {
+      clearInterval(slideInterval);
+  });
+
+  heroSection.addEventListener('mouseleave', () => {
+      slideInterval = setInterval(nextSlide, 6000);
+  });
+
+  // Enhanced dot navigation
   dots.forEach((dot, index) => {
       dot.addEventListener('click', () => {
+          if (isTransitioning || index === currentSlide) return;
           currentSlide = index;
           showSlide(currentSlide);
       });
@@ -1837,6 +2032,9 @@
   }
   // Run greeting on page load
   window.onload = showGreeting;
+
+        /* Updated slider initialization to handle both sliders */
+        /* Updated slider initialization to handle both sliders */
 </script>
 </body>
 </html>

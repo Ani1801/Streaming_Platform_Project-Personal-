@@ -502,8 +502,8 @@
     const tabButtons = document.querySelectorAll('.tab-button');
     const signupFields = document.getElementById('signupFields');
     const signupPasswordConfirm = document.getElementById('signupPasswordConfirm');
-    const submitButton = document.querySelector('.submit-btn'); // Correctly target the button
-    const submitButtonText = submitButton.querySelector('.btn-text'); // Target the span for text
+    const submitButton = document.querySelector('.submit-btn');
+    const submitButtonText = submitButton.querySelector('.btn-text');
     const authFooterText = document.getElementById('authFooterText');
     const authToggle = document.getElementById('authToggle');
     const authForm = document.getElementById('authForm');
@@ -520,14 +520,16 @@
         });
     });
 
-    authToggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        toggleAuthMode(!isSignUp);
-        
-        // Update active tab
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        const targetTab = isSignUp ? 'signup' : 'signin';
-        document.querySelector(`[data-tab="${targetTab}"]`).classList.add('active');
+    document.addEventListener('click', (e) => {
+        if (e.target && e.target.id === 'authToggle') {
+            e.preventDefault();
+            toggleAuthMode(!isSignUp);
+            
+            // Update active tab
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            const targetTab = isSignUp ? 'signup' : 'signin';
+            document.querySelector(`[data-tab="${targetTab}"]`).classList.add('active');
+        }
     });
 
     function toggleAuthMode(signUp) {
@@ -536,24 +538,14 @@
         if (signUp) {
             signupFields.style.display = 'block';
             signupPasswordConfirm.style.display = 'block';
-            submitButtonText.textContent = 'Create Account'; // Update the span's text
+            submitButtonText.textContent = 'Create Account';
             authFooterText.innerHTML = 'Already have an account? <a href="#" id="authToggle">Sign in here</a>';
         } else {
             signupFields.style.display = 'none';
             signupPasswordConfirm.style.display = 'none';
-            submitButtonText.textContent = 'Sign In'; // Update the span's text
+            submitButtonText.textContent = 'Sign In';
             authFooterText.innerHTML = 'Don\'t have an account? <a href="#" id="authToggle">Sign up here</a>';
         }
-        
-        // Re-attach event listener to new toggle link
-        document.getElementById('authToggle').addEventListener('click', (e) => {
-            e.preventDefault();
-            toggleAuthMode(!isSignUp);
-            
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            const targetTab = isSignUp ? 'signup' : 'signin';
-            document.querySelector(`[data-tab="${targetTab}"]`).classList.add('active');
-        });
     }
 
     // Password toggle functionality
@@ -572,30 +564,91 @@
         }
     });
 
-    // Form submission
     authForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        console.log('Submit button clicked. Adding loading class.'); // Diagnostic log
-        submitButton.classList.add('loading'); // Add loading class to the button
+        const emailInput = authForm.querySelector('input[type="email"]');
+        const passwordInput = authForm.querySelector('input[type="password"]');
         
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        console.log('API call simulated. Removing loading class.'); // Diagnostic log
-        submitButton.classList.remove('loading'); // Remove loading class from the button
-        
-        // Redirect to dashboard on successful login
-        if (isSignUp) {
-            alert('Account created successfully! Redirecting to dashboard...');
-        } else {
-            alert('Signed in successfully! Redirecting to dashboard...');
+        // Basic validation
+        if (!emailInput.value.trim() || !passwordInput.value.trim()) {
+            showNotification('Please fill in all required fields', 'error');
+            return;
         }
         
-        setTimeout(() => {
-            window.location.href = '../index.html';
-        }, 1000);
+        submitButton.classList.add('loading');
+        
+        try {
+            // Simulate API call with better error handling
+            await new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    // Simulate occasional network errors for testing
+                    if (Math.random() > 0.9) {
+                        reject(new Error('Network error'));
+                    } else {
+                        resolve();
+                    }
+                }, 2000);
+            });
+            
+            submitButton.classList.remove('loading');
+            
+            if (isSignUp) {
+                showNotification('Account created successfully! Redirecting...', 'success');
+            } else {
+                showNotification('Signed in successfully! Redirecting...', 'success');
+            }
+            
+            setTimeout(() => {
+                window.location.href = 'profile.html';
+            }, 1000);
+            
+        } catch (error) {
+            submitButton.classList.remove('loading');
+            showNotification('Something went wrong. Please try again.', 'error');
+        }
     });
+
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        const bgColor = type === 'error' ? '#ff4444' : type === 'success' ? '#44ff44' : '#33E0B2';
+        
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${bgColor};
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            z-index: 1000;
+            animation: slideInRight 0.3s ease-out;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            max-width: 300px;
+        `;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.style.animation = 'slideOutRight 0.3s ease-out';
+            setTimeout(() => notification.remove(), 300);
+        }, 4000);
+    }
+
+    // Add notification animation styles
+    const notificationStyle = document.createElement('style');
+    notificationStyle.textContent = `
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideOutRight {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(100px); }
+        }
+    `;
+    document.head.appendChild(notificationStyle);
 
     // Input focus effects
     const inputs = document.querySelectorAll('.form-input');
