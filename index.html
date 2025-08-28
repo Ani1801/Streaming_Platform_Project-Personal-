@@ -8,6 +8,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
+            $('.hide-btn').on('click', function (e) {
+                e.stopPropagation(); // Prevent triggering parent click events
+                $(this).closest('.movie-card').fadeOut(300);
+            });
+
             $('.toggle-desc-btn').on('click', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
@@ -57,6 +62,70 @@
             color: #ffffff;
             overflow-x: hidden;
         }
+
+        /* Align title and hide button horizontally */
+        .title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            width: 228.8px;
+            /* Optional if you want to constrain width here */
+            height: 32px;
+            /* Maintain your fixed height */
+            overflow: hidden;
+        }
+
+        /* Movie title styling */
+        .movie-title1 {
+            font-size: 20px;
+            margin: 0;
+            color: #fff;
+
+            flex: 1 1 auto;
+            /* Allow it to grow and shrink */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
+            /* Required for ellipsis inside flex container */
+        }
+
+        /* Hide button inside info area */
+        .hide-btn {
+            background: transparent;
+            border: none;
+            font-size: 16px;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            overflow: hidden;
+            padding: 4px;
+
+            flex-shrink: 0;
+            /* Prevent the button from shrinking */
+            white-space: nowrap;
+        }
+
+        .hide-btn:hover {
+            color: #8892B0;
+        }
+
+        .slide-label {
+            max-width: 0;
+            opacity: 0;
+            overflow: hidden;
+            margin-left: 6px;
+            color: #8892B0;
+            transition: max-width 0.3s ease, opacity 0.3s ease;
+        }
+
+        .hide-btn:hover .slide-label {
+            max-width: 140px;
+            opacity: 1;
+        }
+
 
         /* Navigation Bar */
         .navbar {
@@ -1405,7 +1474,21 @@
                         <img src="./images/joker.jpg" alt="Joker">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">Joker</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1">Joker</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Drama • Crime</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1429,7 +1512,21 @@
                         <img src="./images/dune.jpg" alt="Dune">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">Dune</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1">Dune</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Sci-Fi • Adventure</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1451,7 +1548,21 @@
                         <img src="./images/aquaman.jpg" alt="Aquaman">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">Aquaman</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1">Aquaman</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Action • Fantasy</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1473,7 +1584,21 @@
                         <img src="./images/batman.jpg" alt="The Batman">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">The Batman</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1">The Batman</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Action • Crime</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1496,7 +1621,21 @@
                         <img src="./images/cosmic.jpg" alt="Cosmic Echoes">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">Cosmic Echoes</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1">Cosmic Echoes</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Sci-Fi • Thriller</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1518,7 +1657,21 @@
                         <img src="./images/dexter.jpg" alt="Dexter">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">Dexter</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1">Dexter</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Suspense • Action</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1540,7 +1693,21 @@
                         <img src="./images/Agent x.jpg" alt="Agent X">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">Agent X</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1">Agent X</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Action • Spy</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1562,7 +1729,21 @@
                         <img src="./images/Mind Games.jpg" alt="Mind Games">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">Mind Games</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1">Mind Games</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Thriller • Mystery</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1584,7 +1765,21 @@
                         <img src="./images/Avenger.jpg" alt="avengers_endgame">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">Avengers Endgame</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1" title="Avengers Endgame">Avengers Endgame</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Thriller • Action</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1606,7 +1801,21 @@
                         <img src="./images/interstellar.jpg" alt="Love & Laughter">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">Interstellar</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1">Love & Laughter</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Space • Mystery</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1628,7 +1837,21 @@
                         <img src="./images/Lost civil.jpeg" alt="Lost Civilizations">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">Lost Civilizations</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1">Lost Civilization</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Adventure • Action</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1650,7 +1873,21 @@
                         <img src="./images/witness.jpg" alt="The Silent Witness">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">The Silent Witness</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1">The Silent Witness</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Mystery • Crime</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1683,7 +1920,21 @@
                         <img src="./images/stranger_things.jpg" alt="Stranger Things">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">Stranger Things</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1">Stranger Things</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Horror • Sci-Fi</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1705,7 +1956,21 @@
                         <img src="./images/crown.jpg" alt="The Crown">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">The Crown</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1">The Crown</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Drama • Biography</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1727,7 +1992,21 @@
                         <img src="./images/house_of_dragon.jpg" alt="House of Dragon">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">House of Dragon</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1">House of Dragon</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Fantasy • Drama</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1749,7 +2028,21 @@
                         <img src="./images/money_heist.jpg" alt="Money Heist">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">Money Heist</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1">Money Heist</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Crime • Thriller</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1772,7 +2065,21 @@
                         <img src="./images/cyberpunk.jpg" alt="Cyberpunk Dreams">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">Cyberpunk Dreams</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1" title="Cyberpunk Dreams">Cyberpunk Dreams</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Sci-Fi • Action</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1794,7 +2101,21 @@
                         <img src="./images/kingdom.jpg" alt="The Last Kingdom">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">The Last Kingdom</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1">The Last Kingdom</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Historical • Drama</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1816,7 +2137,21 @@
                         <img src="./images/whisper.jpg" alt="Whispers in the Dark">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">Whispers in the Dark</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1" title="Whispers in the Dark">Whispers in the Dark</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Thriller • Supernatural</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1838,7 +2173,21 @@
                         <img src="./images/enchant.jpg" alt="The Enchanted Forest">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">The Enchanted Forest</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1" title="The Enchanted Forest">The Enchanted Forest</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Animation • Adventure</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1860,7 +2209,21 @@
                         <img src="./images/city.jpg" alt="City of Shadows">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">City of Shadows</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1">City of Shadows</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Crime • Drama</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1882,7 +2245,21 @@
                         <img src="./images/star.jpg" alt="Starfall Chronicles">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">Starfall Chronicles</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1">Starfall Chronicles</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Sci-Fi • Space Opera</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1904,7 +2281,21 @@
                         <img src="./images/healer.jpg" alt="The Healers">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">The Healers</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1">The Healers</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Drama • Medical</p>
                         <div class="movie-rating">
                             <span>⭐</span>
@@ -1926,7 +2317,21 @@
                         <img src="./images/Wasteland.jpg" alt="Wasteland Survivors">
                     </div>
                     <div class="movie-info">
-                        <h3 class="movie-title">Wasteland Survivors</h3>
+                        <!-- Movie Title + Not Interested Button side by side -->
+                        <div class="title-row">
+                            <h3 class="movie-title1" title="Wasteland Survivors">Wasteland Survivors</h3>
+
+                            <!-- Slide Button -->
+                            <button class="hide-btn" aria-label="Skip">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-thumbs-down">
+                                    <path
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
+                                </svg>
+                                <span class="slide-label">Hide</span>
+                            </button>
+                        </div>
                         <p class="movie-genre">Action • Post-Apocalyptic</p>
                         <div class="movie-rating">
                             <span>⭐</span>
