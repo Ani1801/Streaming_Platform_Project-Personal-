@@ -180,6 +180,7 @@
         <p id="authFooterText">Don't have an account? <a href="#" id="authToggle">Sign up here</a></p>
     </div>
 </div>
+
 <script>
 const tabButtons = document.querySelectorAll('.tab-button');
 const signupFields = document.getElementById('signupFields');
@@ -254,11 +255,11 @@ authForm.addEventListener('submit', async (e) => {
             return;
         }
     }
-
+    // Correct endpoint for local development
     const endpoint = isSignUp 
-    ? '/auth/signup' 
-    : '/auth/login';
-
+        ? 'http://localhost:5000/auth/signup' 
+        : 'http://localhost:5000/auth/login';
+    
     const payload = isSignUp 
         ? { fullName, email, password, confirmPassword } 
         : { email, password };
@@ -274,24 +275,22 @@ authForm.addEventListener('submit', async (e) => {
         // Check for a successful response from the server (status code 200-299)
         if (res.ok) {
             if (isSignUp) {
-                // Successful signup, show message and switch to sign-in tab
                 alert(data.message || "Account created successfully! Please sign in.");
                 const signInButton = document.querySelector('.tab-button[data-tab="signin"]');
                 if (signInButton) {
                     signInButton.click();
                 }
             } else {
-                // Successful login, show message and redirect to the index page
                 alert(data.message || "Login successful!");
                 window.location.href = '../index.html';
             }
         } else {
-            // Handle server-side errors (e.g., invalid credentials)
-            alert(data.message || "An error occurred. Please check your information and try again.");
+            // Handle server-side errors
+            alert(data.message || "An error occurred. Please check your credentials.");
         }
     } catch(err) {
         console.error("Network or server connection error:", err);
-        alert("Server error. Please check your network connection.");
+        alert("Server error. Please ensure your backend is running and reachable.");
     } finally {
         submitButton.classList.remove('loading');
     }
