@@ -1235,6 +1235,10 @@
             margin-left: 2px;
             transition: color 0.3s ease;
         }
+
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
 
@@ -1260,7 +1264,7 @@
                 <a href="views/explore.html" class="nav-link">
                     <svg class="nav-icon" viewBox="0 0 24 24">
                         <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.35-4.35"></path>
+                        <path d="m21 21-4.35-4.35" />
                     </svg>
                     Explore
                 </a>
@@ -1310,8 +1314,10 @@
         </div>
 
         <div class="auth-buttons">
-            <!--       <a href="views/login.html" class="auth-btn signin-btn">Sign In</a> -->
-            <a href="views/login.html" class="auth-btn signup-btn">Sign Up</a>
+            <!-- Auth buttons controlled by JavaScript -->
+            <a href="views/login.html" class="auth-btn signin-btn" id="signin-btn">Sign In</a>
+            <a href="views/login.html" class="auth-btn signup-btn" id="signup-btn">Sign Up</a>
+            <a href="#" class="auth-btn signin-btn hidden" id="signout-btn">Sign Out</a>
         </div>
     </header>
 
@@ -2559,7 +2565,25 @@
         function selectSearchResult(title) {
             searchInput.value = title;
             searchResults.style.display = 'none';
-            alert(`Opening ${title}...`);
+            // Use a message box instead of alert()
+            const message = document.createElement('div');
+            message.textContent = `Opening ${title}...`;
+            message.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 20px;
+                border-radius: 8px;
+                z-index: 10000;
+                font-size: 1.2rem;
+            `;
+            document.body.appendChild(message);
+            setTimeout(() => {
+                document.body.removeChild(message);
+            }, 2000);
         }
 
         // Search event listeners
@@ -2652,7 +2676,25 @@
         continueCards.forEach(card => {
             card.addEventListener('click', () => {
                 const title = card.querySelector('h4').textContent;
-                alert(`Resuming ${title}...`);
+                // Use a message box instead of alert()
+                const message = document.createElement('div');
+                message.textContent = `Resuming ${title}...`;
+                message.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: rgba(0, 0, 0, 0.8);
+                    color: white;
+                    padding: 20px;
+                    border-radius: 8px;
+                    z-index: 10000;
+                    font-size: 1.2rem;
+                `;
+                document.body.appendChild(message);
+                setTimeout(() => {
+                    document.body.removeChild(message);
+                }, 2000);
             });
         });
 
@@ -2706,6 +2748,58 @@
 
         /* Updated slider initialization to handle both sliders */
         /* Updated slider initialization to handle both sliders */
+
+        // --- Auth Logic Implementation ---
+
+        // Get references to the auth buttons
+        const signinBtn = document.getElementById('signin-btn');
+        const signupBtn = document.getElementById('signup-btn');
+        const signoutBtn = document.getElementById('signout-btn');
+
+        // Function to check auth status and update the UI
+        function updateAuthUI() {
+            // Check for a token in local storage
+            const userToken = localStorage.getItem('userToken');
+
+            if (userToken) {
+                // User is logged in
+                signinBtn.classList.add('hidden');
+                signupBtn.classList.add('hidden');
+                signoutBtn.classList.remove('hidden');
+                console.log("Auth state: Logged In");
+            } else {
+                // User is logged out
+                signinBtn.classList.remove('hidden');
+                signupBtn.classList.remove('hidden');
+                signoutBtn.classList.add('hidden');
+                console.log("Auth state: Logged Out");
+            }
+        }
+
+        // Simulating a login
+        signinBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            // In a real app, this would be a successful fetch call to your backend
+            localStorage.setItem('userToken', 'dummy_jwt_token_123'); // Store a dummy token
+            
+            // Immediately update the UI
+            updateAuthUI();
+            console.log("Simulated login. Token stored.");
+        });
+
+        // Handling the sign-out logic
+        signoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Remove the token from local storage
+            localStorage.removeItem('userToken');
+
+            // Immediately update the UI
+            updateAuthUI();
+            console.log("User signed out. Token removed.");
+        });
+
+        // Run the function on initial page load
+        window.addEventListener('load', updateAuthUI);
     </script>
 </body>
 
